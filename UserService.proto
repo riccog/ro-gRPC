@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option go_package = "github.com/riccog/ro-gRPC/UserService";
+
+message UserProfile {
+    // string id = 1;
+    string first = 1;
+    string lastName = 2;
+    string email = 3;
+    // repeated Group groups = 4;
+}
+
+// message Group {
+//     string groupName = 1;
+//     string groupId = 2;
+// }
+
+message CreateRequest {
+    string email = 1;
+}
+
+message CreateResponse {
+    UserProfile UserProfile = 1;
+}
+
+service UserService {
+    rpc GetUser(CreateRequest) returns (CreateResponse);
+}
