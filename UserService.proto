@@ -3,17 +3,17 @@ syntax = "proto3";
 option go_package = "github.com/riccog/ro-gRPC/UserService";
 
 message UserProfile {
-    // string id = 1;
-    string first = 1;
-    string lastName = 2;
-    string email = 3;
-    // repeated Group groups = 4;
+    string userId = 1;
+    string firstName = 2;
+    string lastName = 3;
+    string email = 4;
+    repeated Group groups = 5;
 }
 
-// message Group {
-//     string groupName = 1;
-//     string groupId = 2;
-// }
+message Group {
+    string groupName = 1;
+    string groupId = 2;
+}
 
 message CreateRequest {
     string email = 1;
@@ -23,6 +23,34 @@ message CreateResponse {
     UserProfile UserProfile = 1;
 }
 
+message Task {
+    string taskId = 1;
+    string taskName = 2;
+    TaskStatus taskStatus = 3;
+    string userId = 4;
+    string groupId = 5;
+}
+
+message CreateTaskRequest {
+    Task task = 1;
+}
+
+message DeleteTaskRequest {
+    string taskId = 1;
+}
+
+message TaskResponse {
+    Task task = 1;
+}
+
+enum TaskStatus {
+    PENDING = 0;
+    IN_PROGRESS = 1;
+    COMPLETED = 2;
+}
+
 service UserService {
     rpc GetUser(CreateRequest) returns (CreateResponse);
+    rpc AddTask(CreateTaskRequest) returns (TaskResponse);
+    rpc DeleteTask(DeleteTaskRequest) returns (TaskResponse);
 }

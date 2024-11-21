@@ -13,11 +13,45 @@ type myUserServiceServer struct {
 }
 
 func (s myUserServiceServer) GetUser(ctx context.Context, req *UserService.CreateRequest) (*UserService.CreateResponse, error) {
+	group1 := &UserService.Group{
+		GroupName: "Group A",
+		GroupId:   "group_a",
+	}
+	group2 := &UserService.Group{
+		GroupName: "Group B",
+		GroupId:   "group_b",
+	}
 	return &UserService.CreateResponse{
 		UserProfile: &UserService.UserProfile{
+			UserId:    "1",
 			FirstName: "John",
 			LastName:  "Doe",
 			Email:     "johndoeyouknow@cool.com",
+			Groups:    []*UserService.Group{group1, group2},
+		},
+	}, nil
+}
+
+func (s myUserServiceServer) AddTask(ctx context.Context, req *UserService.CreateTaskRequest) (*UserService.TaskResponse, error) {
+	return &UserService.TaskResponse{
+		Task: &UserService.Task{
+			TaskId:     "This is the task ID",
+			TaskName:   "Take out the trash",
+			TaskStatus: UserService.TaskStatus_IN_PROGRESS,
+			UserId:     "1",
+			GroupId:    "group_a",
+		},
+	}, nil
+}
+
+func (s myUserServiceServer) DeleteTask(ctx context.Context, req *UserService.DeleteTaskRequest) (*UserService.TaskResponse, error) {
+	return &UserService.TaskResponse{
+		Task: &UserService.Task{
+			TaskId:     "This is the task ID",
+			TaskName:   "Take out the trash",
+			TaskStatus: UserService.TaskStatus_IN_PROGRESS,
+			UserId:     "1",
+			GroupId:    "group_a",
 		},
 	}, nil
 }
